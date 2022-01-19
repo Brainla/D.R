@@ -67,10 +67,11 @@ const create_agent_details = {
 	'page-value':'create-agent',
 	'data-endpoint':"agent-details/all-agent-details",
 	'store-endpoint':"agent-details/insert",
+	'search-endpoint':"data-search",
 	'delete-agent': "agent-details/delete",
 	'freeze-agent': "agent-details/freeze",
 	'update-agent': "agent-details/update",
-	'data-accessors':{'agentId': 'agent_id', 'agentName': 'agent_name', 'mobileNo': 'ph_no'}	
+	'data-accessors':{'agentId': 'agent_id', 'agentName': 'agent_name', 'mobileNo': 'ph_no', 'freezeStatus': 'freeze_status'}	
 };
 
 const login_details = {
@@ -162,6 +163,15 @@ $(document).ready(function(){
 			$('#updateUserId').val(updateUserId);
 			console.log($('#updateUserId').val())
 		});
+
+		//daily work update form - disable function 
+
+		if($("#page_type").val() == daily_work_details['page-value']){
+			$('#newType').change(function () {
+				$(".updateDailywork #editstartDate").attr("disabled", $("#newType").val() != "Received" && $("#newType").val() != "Given Date");
+				$(".updateDailywork #receamt").attr("disabled", $("#newType").val() != "Received");
+			});
+		}
 		
 		// load the table intially based on page type
 	
@@ -579,6 +589,12 @@ $(document).ready(function(){
 			renderAdminapprovalTable(1);
 		}else if($("#page_type").val() ==  monthly_report_details['page-value']){
 			renderMonthlyReport(1);
+		}else if($("#page_type").val() == create_agent_details['page-value']){
+			renderAgentTable(1);
+		}else if($("#page_type").val() == customer_repayment_page['page-value']){
+			renderCustomerRepaymentPage(1);
+		}else if($("#page_type").val() == manage_customer_details['page-value']){
+			renderCustomerTable(1);
 		}
 	});
 
@@ -1170,6 +1186,7 @@ function renderCustomerTable(page_no){
 	// Search endpoint changes displays only, when the search field is not selected. 
 	var endpoint = base_url+manage_customer_details['data-endpoint']+"?limit="+rows_per_page+"&offset="+offset;
 	if(checkValid(search_val)){
+		console.log(search_val);
 		endpoint = base_url+manage_customer_details['search-endpoint']+"?&cust_id="+search_val;
 	}
 
@@ -1342,9 +1359,15 @@ function renderAgentTable(page_no){
 	var limit= (page_no*rows_per_page) - rows_per_page;
 
 	var search_val = $("[name='search']").val();
+	var endpoint = base_url + create_agent_details['data-endpoint']+"?limit="+rows_per_page+"&offset="+offset+"&agent_id="+agent_id;
+	// Search endpoint changes displays only, when the search field is not selected. 
+	if(checkValid(search_val)){
+		console.log('search_val', search_val);
+		endpoint = base_url + create_agent_details['search-endpoint'] + "?&agent_id=" + search_val;
+	}
 	$.ajax({
 	method: "GET",
-	url: base_url+ create_agent_details['data-endpoint'] +"?limit="+limit+"&offset="+offset+"&query="+search_val
+	url: endpoint
 	}).done(function( data) {
 		//data = JSON.parse(data);
 		//console.log("data.length");
@@ -1359,7 +1382,7 @@ function renderAgentTable(page_no){
 		if(total_count > 0){
 			console.log('abcd')
 			$.each(data['dataList'], function(index,val){
-				var append_table = '<tr class="row_'+index+'"><td>'+(index+1)+'</td><td class="agent_id">'+(val['agent_id']!=undefined ? val['agent_id'] : "")+'</td><td>'+(val['agent_name']!=undefined ? val['agent_name'] : "")+'</td><td class="phone">'+(val['ph_no']!=undefined ? val['ph_no'] : "")+'</td>' + "<td><button class='btn btn-info' data-target='#updateUser' data-toggle='modal' id='updateButton' data-user-id="+val['agent_id']+">Update</button></td>"  +"<td><button class='btn btn-info' id="+val['agent_id']+" onclick='freezeAgent(this.id)'>Freeze</button></td>" + "<td><button class='btn btn-danger' id="+val['agent_id']+" onclick='deleteAgent(this.id)'>Delete</button></td>" ;
+				var append_table = '<tr class="row_'+index+'"><td>'+(index+1)+'</td><td class="agent_id">'+(val['agent_id']!=undefined ? val['agent_id'] : "")+'</td><td>'+(val['agent_name']!=undefined ? val['agent_name'] : "")+'</td><td class="phone">'+(val['ph_no']!=undefined ? val['ph_no'] : "")+'</td>' + "<td><button class='btn btn-info' data-target='#updateUser' data-toggle='modal' id='updateButton' data-user-id="+val['agent_id']+">Update</button></td>"  +"<td><button class='btn btn-info' id="+val['agent_id']+" onclick='freezeOrUnfreezeAgent(this.id)'>"+ val['freeze_status']== true ? "Freeze" : "Unfreeze" +"</button></td>" + "<td><button class='btn btn-danger' id="+val['agent_id']+" onclick='deleteAgent(this.id)'>Delete</button></td>" ;
 
 				// var append_table = '<tr class="row_'+index+'"><td>'+(index+1)+'</td><td class="agent_id">'+(val[create_agent_details['agentId']]!=undefined ? val[create_agent_details['agentId']] : "")+'</td><td class="agent_id_by_company">'+(val[create_agent_details['agentIDByCompany']]!=undefined ? val[create_agent_details['agentIDByCompany']] : "")+'</td><td class="agent_name">'+(val[create_agent_details['agentName']]!=undefined ? val[create_agent_details['agentName']] : "")+'</td><td class="phone">'+(val[create_agent_details['mobileNo']]!=undefined ? val[create_agent_details['mobileNo']] : "")+'</td>' + "<td><button class='btn btn-info' freezeId="+create_agent_details['agentId']+" onclick='freezeAgent(this.freezeId)'>Freeze</button></td>" + "<td><button class='btn btn-danger' deleteId="+create_agent_details['agentId']+" onclick='deleteAgent(this.deleteId)'>Delete</button></td>" ;
 				$("#electric_table").append(append_table);
@@ -1376,7 +1399,7 @@ function renderAgentTable(page_no){
   });
 }
 
-function freezeAgent(freezeid) {
+function freezeOrUnfreezeAgent(freezeid) {
 	console.log("freeze",freezeid);
 	const freezeURL = base_url + create_agent_details['freeze-agent'] + "?"  +"agent_id="+ freezeid
 	$.ajax({
@@ -1408,6 +1431,7 @@ function renderAdminWorkTable(page_no){
 	var offset = getOffsetValue(page_no,rows_per_page);
 	
 	var search_val = $("[name='search']").val();
+	console.log('search_val', search_val);
 
 	var endpoint = base_url + admin_work_details['data-endpoint']+"?limit="+rows_per_page+"&offset="+offset+"&agent_id="+agent_id;
 	// Search endpoint changes displays only, when the search field is not selected. 
@@ -1601,7 +1625,7 @@ function renderAdminapprovalTable(page_no){
 					'<td class="current_bal">'+bal+'</td>'+
 					'<td class="status">'+(val[admin_approval_details['data-accessors']['status']]!=undefined ? val[admin_approval_details['data-accessors']['status']] : "")+'</td>'+
 					'<td class="date">'+(val[admin_approval_details['data-accessors']['given_date']]!=undefined ? val[admin_approval_details['data-accessors']['given_date']] : "")+'<input type="hidden" class="collection_date" value='+val[admin_approval_details['data-accessors']['collection_date']]+'></td>'+
-					'<td><button type="button" class="fa fa-angle-double-down saveButton" style="font-size:36px"><span class="material-icons"></span></button><input class="agent_id" type="hidden" value="'+val[daily_work_details['data-accessors']['agent_id']]+'"/></td>'+
+					'<td><button type="button" class="fa fa-angle-double-down saveButton" style="font-size:36px"><span class="material-icons"></span></button><input class="agent_id" type="hidden" value="'+val[daily_work_details['data-accessors']['agent_id']]+'"/></td>'+'<td><button type="button" class="fa fa-angle-double-down saveButton" style="font-size:36px"><span class="material-icons"></span></button><input class="agent_id" type="hidden" value="'+val[daily_work_details['data-accessors']['agent_id']]+'"/></td>'+
 					'</tr>';
 					$("#electric_table").append(append_table);
 				});
@@ -1769,9 +1793,15 @@ function renderCustomerRepaymentPage(page_no){
 	var limit= (page_no*rows_per_page) - rows_per_page;
 
 	var search_val = $("[name='search']").val();
+	var endpoint = base_url+ customer_repayment_page['data-endpoint'] +"?limit="+limit+"&offset="+offset+"&query="+search_val+"&agent_id="+agent_id;
+	// Search endpoint changes displays only, when the search field is not selected. 
+	if(checkValid(search_val)){
+		console.log('search_val', search_val);
+		endpoint = base_url+ customer_repayment_page['data-endpoint'] + "?&cust_id=" + search_val;
+	}
 	$.ajax({
 	method: "GET",
-	url: base_url+ customer_repayment_page['data-endpoint'] +"?limit="+limit+"&offset="+offset+"&query="+search_val+"&agent_id="+agent_id
+	url: endpoint
 	}).done(function( data) {
 		//data = JSON.parse(data);
 		//console.log("data.length");

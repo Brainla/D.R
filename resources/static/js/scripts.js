@@ -67,6 +67,7 @@ const create_agent_details = {
 	'page-value':'create-agent',
 	'data-endpoint':"agent-details/all-agent-details",
 	'store-endpoint':"agent-details/insert",
+	'search-endpoint':"data-search",
 	'delete-agent': "agent-details/delete",
 	'freeze-agent': "agent-details/freeze",
 	'update-agent': "agent-details/update",
@@ -162,6 +163,15 @@ $(document).ready(function(){
 			$('#updateUserId').val(updateUserId);
 			console.log($('#updateUserId').val())
 		});
+
+		//daily work update form - disable function 
+
+		if($("#page_type").val() == daily_work_details['page-value']){
+			$('#newType').change(function () {
+				$(".updateDailywork #editstartDate").attr("disabled", $("#newType").val() != "Received" && $("#newType").val() != "Given Date");
+				$(".updateDailywork #receamt").attr("disabled", $("#newType").val() != "Received");
+			});
+		}
 		
 		// load the table intially based on page type
 	
@@ -579,6 +589,12 @@ $(document).ready(function(){
 			renderAdminapprovalTable(1);
 		}else if($("#page_type").val() ==  monthly_report_details['page-value']){
 			renderMonthlyReport(1);
+		}else if($("#page_type").val() == create_agent_details['page-value']){
+			renderAgentTable(1);
+		}else if($("#page_type").val() == customer_repayment_page['page-value']){
+			renderCustomerRepaymentPage(1);
+		}else if($("#page_type").val() == manage_customer_details['page-value']){
+			renderCustomerTable(1);
 		}
 	});
 
@@ -1170,6 +1186,7 @@ function renderCustomerTable(page_no){
 	// Search endpoint changes displays only, when the search field is not selected. 
 	var endpoint = base_url+manage_customer_details['data-endpoint']+"?limit="+rows_per_page+"&offset="+offset;
 	if(checkValid(search_val)){
+		console.log(search_val);
 		endpoint = base_url+manage_customer_details['search-endpoint']+"?&cust_id="+search_val;
 	}
 
@@ -1342,9 +1359,15 @@ function renderAgentTable(page_no){
 	var limit= (page_no*rows_per_page) - rows_per_page;
 
 	var search_val = $("[name='search']").val();
+	var endpoint = base_url + create_agent_details['data-endpoint']+"?limit="+rows_per_page+"&offset="+offset+"&agent_id="+agent_id;
+	// Search endpoint changes displays only, when the search field is not selected. 
+	if(checkValid(search_val)){
+		console.log('search_val', search_val);
+		endpoint = base_url + create_agent_details['search-endpoint'] + "?&agent_id=" + search_val;
+	}
 	$.ajax({
 	method: "GET",
-	url: base_url+ create_agent_details['data-endpoint'] +"?limit="+limit+"&offset="+offset+"&query="+search_val
+	url: endpoint
 	}).done(function( data) {
 		//data = JSON.parse(data);
 		//console.log("data.length");
@@ -1408,6 +1431,7 @@ function renderAdminWorkTable(page_no){
 	var offset = getOffsetValue(page_no,rows_per_page);
 	
 	var search_val = $("[name='search']").val();
+	console.log('search_val', search_val);
 
 	var endpoint = base_url + admin_work_details['data-endpoint']+"?limit="+rows_per_page+"&offset="+offset+"&agent_id="+agent_id;
 	// Search endpoint changes displays only, when the search field is not selected. 
@@ -1769,9 +1793,15 @@ function renderCustomerRepaymentPage(page_no){
 	var limit= (page_no*rows_per_page) - rows_per_page;
 
 	var search_val = $("[name='search']").val();
+	var endpoint = base_url+ customer_repayment_page['data-endpoint'] +"?limit="+limit+"&offset="+offset+"&query="+search_val+"&agent_id="+agent_id;
+	// Search endpoint changes displays only, when the search field is not selected. 
+	if(checkValid(search_val)){
+		console.log('search_val', search_val);
+		endpoint = base_url+ customer_repayment_page['data-endpoint'] + "?&cust_id=" + search_val;
+	}
 	$.ajax({
 	method: "GET",
-	url: base_url+ customer_repayment_page['data-endpoint'] +"?limit="+limit+"&offset="+offset+"&query="+search_val+"&agent_id="+agent_id
+	url: endpoint
 	}).done(function( data) {
 		//data = JSON.parse(data);
 		//console.log("data.length");

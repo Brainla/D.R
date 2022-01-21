@@ -6,7 +6,7 @@
 
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300&display=swap" rel="stylesheet">
-
+ 
   <title>D.R FINANCE</title>
   <br><br>
     <b><strong> <h5 style="font-weight:800;text-align : center;  color: gray;   font-size:36px;margin-right:70px">WELCOME TO D.R FINANCE</h5><br><br>
@@ -17,6 +17,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="../static/js/scripts.js"></script>
 </head>
 <body>
 </head>
@@ -69,16 +70,17 @@ h1,p{
     <br>
     <div id="cen">
    <p style="color:gray;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;Username </p>
-     <input required="required" value="Enter Username" id="amt" type="text" >
+   <input type="hidden" id="page_type" value="login-form" /> 
+   <input required="required" placeholder="Enter Username" id="username" type="text" >
     <br><br>
     <p style="color:gray;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; Password </p>
-  <input required="required" value="Enter Password" id="amt" type="text" >
+  <input required="required" placeholder="Enter Password" id="password" type="password" >
   <br><br>
   <div style="display: flex;">
   	&nbsp; &nbsp; &nbsp;&nbsp;	&nbsp; &nbsp; &nbsp;&nbsp;	&nbsp;
-  	<a href="agent.html">
-   <button type="button" id="ambu" class="btn btn" onclick="myFn()">Login</button> 
-</a>
+  	
+   <button type="button" id="loginFormSumbit" class="btn">Login</button> 
+
 </div>
 
 <br> 

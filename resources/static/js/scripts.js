@@ -654,8 +654,10 @@ $(document).ready(function(){
 	});
 
 	$(document).on('click','.add-customer',function(e){
-		if(!checkValid($('#Userid').val()) && !checkValid($('#newUsername').val()) && !checkValid($('#newMobile').val()) 
-		&& !checkValid($('#relation1').val()) && !checkValid($('#address').val()) && !checkValid($('#aadharno').val()) && !checkValid($('#panno').val())&& !checkValid($('#workaddress').val()) && !checkValid($('#grosspay').val()) &&  !checkValid($('#netpay').val()) && !checkValid($('#moninc').val()) && !checkValid($('#otherinc').val()) && !checkValid($('#history').val()) && !checkValid($('#loanamt').val()) && !checkValid($('#rateofint').val()) && !checkValid($('#newType').val()) && !checkValid($('#property').val())){
+		if(!checkValid($('#agent').val()) || !checkValid($('#newUsername').val()) || !checkValid($('#newMobile').val()) 
+		|| !checkValid($('#relation1').val()) || !checkValid($('#newMobile2').val()) 
+		|| !checkValid($('#relation2').val()) || !checkValid($('#newMobile3').val()) 
+		|| !checkValid($('#relation3').val()) || !checkValid($('#address').val()) || !checkValid($('#aadharno').val()) || !checkValid($('#panno').val())|| !checkValid($('#workaddress').val()) || !checkValid($('#grosspay').val()) ||  !checkValid($('#netpay').val()) || !checkValid($('#moninc').val()) || !checkValid($('#otherinc').val()) || !checkValid($('#history').val()) || !checkValid($('#loanamt').val()) || !checkValid($('#rateofint').val()) || !checkValid($('#newType').val()) || !checkValid($('#property').val()) || !checkValid($('#emiAmount').val())|| !checkValid($('#collectionDate').val()) || !checkValid($('#newType').val())){
 			console.log('enter req fields')
 			return false;
 		}
@@ -704,9 +706,9 @@ $(document).ready(function(){
 	$(document).on('click','#newuser',function(e){
 		var post_endpoint = create_agent_details['store-endpoint'];
 		var request_json = {
-			agent_id: ('#Userid').text() ? ('#Userid').text() : 0,
-			agent_name: ('#newUsername').text() ? ('#newUsername').text() : 0,
-			ph_no: ('#newMobile').text() ? ('#newMobile').text() : 0
+			agent_id: $('#Userid').val() ? $('#Userid').val() : 0,
+			agent_name: $('#newUsername').val() ? $('#newUsername').val() : 0,
+			ph_no: $('#newMobile').val() ? $('#newMobile').val() : 0
 		}
 		$.ajax({
 			headers: { 
@@ -726,7 +728,7 @@ $(document).ready(function(){
 	    }
 	});
 	$(document).on('click','.create-agent-btn',function(e){
-		if(!checkValid($('#Userid').val()) && !checkValid($('#newUsername').val()) && !checkValid($('#newMobile').val())){
+		if(!checkValid($('#Userid').val()) || !checkValid($('#newUsername').val()) || !checkValid($('#newMobile').val())){
 			console.log('enter req fields')
 			return false;
 		}

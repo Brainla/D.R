@@ -96,7 +96,9 @@ const investor_details = {
 	'search-endpoint':"data-search",
 	'store-endpoint':"data-store",
 	'export-endpoint':"customer-export",
-	'data-accessors':{'id':'customer_id','name':'investor_name','pending':'pending','loan_amount':'loan_amount','roi':'roi','received_date':'received_date','balance':'balance','repay_details':'repay_details'}	
+	'delete-investor': "data-store",
+	'update-investor': "data-store",
+	'data-accessors':{'id':'investor_id','name':'investor_name','loan_amount':'loan_amount','roi':'roi','received_date':'received_date','balance':'balance'}	
 };
 
 const admin_work_details = {
@@ -109,6 +111,17 @@ const admin_work_details = {
 		'store-removal-endpoint':"admin-work/delete",
 		'export-endpoint':"daily-work-export",
 	'data-accessors':{'id':'customer_id','name':'customer_name','emi':'emi','pending':'pending','bal':'balance','status':'status','collection_date':'collection_date','rec_amt':'received_amount','agent_id':'agent_id','given_date':'given_date','agent_name':'agent_name'}
+};
+
+const finance_details = {
+	'page-value':'finance-work',
+	'data-endpoint':"data-retrieve",
+	'search-endpoint':"data-search",
+	'store-endpoint':"data-store",
+	'export-endpoint':"customer-export",
+	'delete-finance': "data-store",
+	'update-finance': "data-store",
+	'data-accessors':{'id':'finance_id','month_and_year':'month_and_year', 'total_capital': 'total_capital', 'liq_cash': 'liq_cash','investor': 'investor', 'dr_amt': 'dr_amt'}	
 };
 
 const admin_approval_details = {
@@ -160,6 +173,8 @@ $(document).ready(function(){
 			renderAdminapprovalTable(1);
 		}else if($("#page_type").val() == monthly_report_details['page-value']){
 			renderMonthlyReport(1);
+		}else if($("#page_type").val() == finance_details['page-value']){
+			renderFinanceDetailTable(1);
 		}
 		
 		$('#updateUser').on('show.bs.modal', function(e) {
@@ -868,6 +883,114 @@ $(document).ready(function(){
 			}
 		}
 	});
+	$(document).on('click','.create-investor-btn',function(e){
+		e.preventDefault();
+		if(!checkValid($('#investor_investor_name').val()) || !checkValid($('#investor_mobile').val()) || !checkValid($('#investor_loan_amt').val()) || !checkValid($('#investor_roi').val()) || !checkValid($('#investor_received_date').val()) || !checkValid($('#investor_repay_details').val())){
+			console.log('enter req fields')
+			return false;
+		}
+		console.log('new investor')
+		var post_endpoint = investor_details['store-endpoint'];
+		var request_json = {
+			investor_investor_name: $('#investor_investor_name').val() ? $('#investor_investor_name').val() : 0,
+			investor_mobile: $('#investor_mobile').val() ? $('#investor_mobile').val() : 0,
+			investor_loan_amt: $('#investor_loan_amt').val() ? $('#investor_loan_amt').val() : 0,
+			investor_roi: $('#investor_roi').val() ? $('#investor_roi').val() : 0,
+			investor_received_date: $('#investor_received_date').val() ? $('#investor_received_date').val() : 0,
+			investor_repay_details: $('#investor_repay_details').val() ? $('#investor_repay_details').val() : 0
+		}
+		$.ajax({
+			headers: { 
+				'Accept': 'application/json',
+				'Content-Type': 'application/json' 
+				},		
+			method: "POST",
+			data:JSON.stringify(request_json),
+			url: base_url+post_endpoint
+			}).done(function( data) {
+				alert(data_updated_message);
+			});
+	});
+	$(document).on('click','.update-investor-btn',function(e){
+		e.preventDefault();
+		if(!checkValid($('#investor_investor_name').val()) || !checkValid($('#investor_mobile').val()) || !checkValid($('#investor_loan_amt').val()) || !checkValid($('#investor_roi').val()) || !checkValid($('#investor_received_date').val()) || !checkValid($('#investor_repay_details').val())){
+			console.log('enter req fields')
+			return false;
+		}
+		console.log('new investor')
+		var post_endpoint = investor_details['update-investor'];
+		var request_json = {
+			investor_investor_name: $('#investor_investor_name').val() ? $('#investor_investor_name').val() : 0,
+			investor_mobile: $('#investor_mobile').val() ? $('#investor_mobile').val() : 0,
+			investor_loan_amt: $('#investor_loan_amt').val() ? $('#investor_loan_amt').val() : 0,
+			investor_roi: $('#investor_roi').val() ? $('#investor_roi').val() : 0,
+			investor_received_date: $('#investor_received_date').val() ? $('#investor_received_date').val() : 0,
+			investor_repay_details: $('#investor_repay_details').val() ? $('#investor_repay_details').val() : 0
+		}
+		$.ajax({
+			headers: { 
+				'Accept': 'application/json',
+				'Content-Type': 'application/json' 
+				},		
+			method: "POST",
+			data:JSON.stringify(request_json),
+			url: base_url+post_endpoint
+			}).done(function( data) {
+				alert(data_updated_message);
+			});
+	});
+	$(document).on('click','.add-finance',function(e){
+		e.preventDefault();
+		if(!checkValid($('#fa_month_and_year').val()) || !checkValid($('#fa_liq_cash').val()) || !checkValid($('#fa_investor').val()) || !checkValid($('#fa_dr_amt').val())){
+			console.log('enter req fields')
+			return false;
+		}
+		console.log('new finance')
+		var post_endpoint = finance_details['store-endpoint'];
+		var request_json = {
+			fa_month_and_year: $('#fa_month_and_year').val() ? $('#fa_month_and_year').val() : 0,
+			fa_liq_cash: $('#fa_liq_cash').val() ? $('#fa_liq_cash').val() : 0,
+			fa_investor: $('#fa_investor').val() ? $('#fa_investor').val() : 0,
+			fa_dr_amt: $('#fa_dr_amt').val() ? $('#fa_dr_amt').val() : 0
+		}
+		$.ajax({
+			headers: { 
+				'Accept': 'application/json',
+				'Content-Type': 'application/json' 
+				},		
+			method: "POST",
+			data:JSON.stringify(request_json),
+			url: base_url+post_endpoint
+			}).done(function( data) {
+				alert(data_updated_message);
+			});
+	});
+	$(document).on('click','.edit-finance',function(e){
+		e.preventDefault();
+		if(!checkValid($('#fe_month_and_year').val()) || !checkValid($('#fe_liq_cash').val()) || !checkValid($('#fe_investor').val()) || !checkValid($('#fe_dr_amt').val())){
+			console.log('enter req fields')
+			return false;
+		}
+		console.log('new investor')
+		var post_endpoint = investor_details['update-investor'];
+		var request_json = {
+			fe_month_and_year: $('#fe_month_and_year').val() ? $('#fe_month_and_year').val() : 0,
+			fe_liq_cash: $('#fe_liq_cash').val() ? $('#fe_liq_cash').val() : 0,
+			fe_investor: $('#fe_investor').val() ? $('#fe_investor').val() : 0,
+			fe_dr_amt: $('#fe_dr_amt').val() ? $('#fe_dr_amt').val() : 0
+		}
+		$.ajax({
+			headers: { 
+				'Accept': 'application/json',
+				'Content-Type': 'application/json' 
+				},		
+			method: "POST",
+			data:JSON.stringify(request_json),
+			url: base_url+post_endpoint
+			}).done(function( data) {
+				alert(data_updated_message);
+			});
+	});
 });
 
 function resetModal(page_type){
@@ -1301,7 +1424,7 @@ function renderCustomerTable(page_no){
 }
 
 function renderInvestorsTable(page_no){
-	//console.log("investors");
+	console.log("investors");
 	$(".loading").show();
 	$("#electric_table tbody").html("");
 	$("#page").hide();
@@ -1337,16 +1460,13 @@ function renderInvestorsTable(page_no){
 							
 					var append_table = '<tr class="row_'+index+'"><td>'+(index+1)+'</td>'+
 						'<td class="investor_id">'+(val[investor_details['data-accessors']['id']]!=undefined ? val[investor_details['data-accessors']['id']] : "")+'</td>'+
-						'<td>'+(val[investor_details['data-accessors']['name']]!=undefined ? val[investor_details['data-accessors']['name']] : "")+'</td>'+
-						'<td class="peding_amt">'+(val[investor_details['data-accessors']['pending']]!=undefined ? val[investor_details['data-accessors']['pending']] : "")+'</td>'+
+						'<td class="investor_name">'+(val[investor_details['data-accessors']['name']]!=undefined ? val[investor_details['data-accessors']['name']] : "")+'</td>'+
 						'<td class="loan_amount">'+(val[investor_details['data-accessors']['loan_amount']]!=undefined ? val[investor_details['data-accessors']['loan_amount']] : "")+'</td>'+
 						'<td class="roi">'+(val[investor_details['data-accessors']['roi']]!=undefined ? val[investor_details['data-accessors']['roi']] : "")+'</td>'+
 						'<td class="date">'+(val[investor_details['data-accessors']['received_date']]!=undefined ? val[investor_details['data-accessors']['received_date']] : "")+'</td>'+
 						'<td class="balance">'+(val[investor_details['data-accessors']['balance']]!=undefined ? val[investor_details['data-accessors']['balance']] : "")+'</td>'+
-						'<td><button type="button" class="fa fa-angle-double-down saveButton" style="font-size:36px">'+
-							'<span class="material-icons"></span>'+
-							'</button>'+
-							'<input class="agent_id" type="hidden" value="'+(val[investor_details['data-accessors']['agent_id']]!=undefined ? val[investor_details['data-accessors']['agent_id']] : "")+'"/></td>'+
+						'<td><button data-toggle="modal" data-target="#editInvestor"  data-investor-id='+ val[investor_details['data-accessors']['id']] +'>Update</button></td>'+
+						'<td><button class="btn btn-danger" id='+  val[investor_details['data-accessors']['id']] +'onclick= '+deleteInvestor(this.id) +'>Delete</button></td>'+
 						'</tr>';
 					$("#electric_table").append(append_table);
 				});
@@ -1748,6 +1868,54 @@ function renderFinanceTable(page_no){
   });
 }
 
+function renderFinanceDetailTable(page_no){
+	$(".loading").show();
+	$("#electric_table tbody").html("");
+	$("#page").hide();
+	
+	var offset = page_no*rows_per_page;
+	var limit= (page_no*rows_per_page) - rows_per_page;
+	var endpoint = base_url +  finance_details['data-endpoint']+"?limit="+rows_per_page+"&offset="+offset+"&agent_id="+agent_id;
+	// Search endpoint changes displays only, when the search field is not selected. 
+	if(checkValid(search_val)){
+		endpoint = base_url+ finance_details['search-endpoint']+"?&cust_id="+search_val+"&agent_id="+agent_id;
+	}
+
+	var search_val = $("[name='search']").val();
+	$.ajax({
+	method: "GET",
+	url: endpoint
+	}).done(function( data) {
+		//data = JSON.parse(data);
+		//console.log("data.length");
+		//console.log(data);
+		var total_count;
+		if(data['dataSize'] != undefined){
+			total_count = data['dataSize'];
+		}
+		//console.log("total_count");
+		//console.log(total_count);
+
+		if(total_count > 0){
+			$.each(data['dailyWorksList'], function(index,val){
+				var append_table = '<tr><td>'+(index+1)+'</td><td>'+val[finance_details['month_and_year']]+'</td><td>'+(val[finance_details['liq_cash']] + val[finance_details['investor']] + val[finance_details['dr_amt']]) +'</td><td>'+val[finance_details['liq_cash']]+'</td><td>'+val[finance_details['investor']]+'</td><td>'+val[finance_details['dr_amt']]+'</td>'+'<td><button data-toggle="modal" data-target="#editFinance"  data-investor-id='+ val[finance_details['data-accessors']['id']] +'>Update</button></td>'+
+				'<td><button class="btn btn-danger" id='+  val[finance_details['data-accessors']['id']] +'onclick= '+deleteFinance(this.id) +'>Delete</button></td>'+
+				'</tr>';
+	
+				
+				$("#electric_table").append(append_table);
+			});
+			if(total_count >10){
+				renderPagination(total_count,page_no,10,1);
+			}
+
+		}else{
+			var append_table = '<tr><td colspan="10">No Data Found</td></tr>';
+			$("#electric_table").append(append_table);
+		}
+		$(".loading").hide();
+  });
+}
 
 function changeDateFormat(date){
 	var d = new Date(date);
@@ -1877,6 +2045,26 @@ function renderCustomerRepaymentPage(page_no){
 function deleteCustomerRepaymentPage(deleteId) {
 	console.log("delete",deleteId);
 	const deleteURL = base_url + customer_repayment_page['delete-agent'] + "/"  + deleteId
+	$.ajax({
+		method: "DELETE",
+		url: deleteURL
+		}).done(function( data) {
+			alert(data_updated_message);
+		});
+}
+function deleteInvestor(deleteId) {
+	console.log("delete",deleteId);
+	const deleteURL = base_url + investor_details['delete-investor'] + "/"  + deleteId
+	$.ajax({
+		method: "DELETE",
+		url: deleteURL
+		}).done(function( data) {
+			alert(data_updated_message);
+		});
+}
+function deleteFinance(deleteId) {
+	console.log("delete",deleteId);
+	const deleteURL = base_url + finance_details['delete-finance'] + "/"  + deleteId
 	$.ajax({
 		method: "DELETE",
 		url: deleteURL

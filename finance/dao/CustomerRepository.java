@@ -26,7 +26,7 @@ public interface CustomerRepository extends JpaRepository<DailyWork, Integer>{
 	public int getCustomerCount(@Param("date") String date,@Param("id") int agent_id);
 	
 	@Query(value = "select * from daily_work where (collection_date=to_date(:date,'yyyy/mm/dd') or given_date=to_date(:date,'yyyy/mm/dd'))"
-			+ " and agent_id=:id", nativeQuery = true)
+			+ " and agent_id=:id order by customer_id", nativeQuery = true)
 	public List<DailyWork> customerDataDownload(@Param("date") String date,@Param("id") int agent_id);
 	
 	

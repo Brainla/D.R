@@ -48,11 +48,6 @@ public class DailyWorkControllerImpl implements DailyWorkController{
 	}
 
 	@Override
-	public ResponseEntity<FinanceStatus> updateMonthlyReportData(MonthlyReport reportData) {
-		return dailyService.updateMonthlyReportData(reportData);
-	}
-
-	@Override
 	public  ResponseEntity<Resource> customerDataDownload(int agent_id) {
 		String filename = "daily_work.xlsx";
 		InputStreamResource file = new InputStreamResource(dailyService.customerDataDownload(agent_id));
@@ -65,6 +60,11 @@ public class DailyWorkControllerImpl implements DailyWorkController{
 	@Override
 	public ResponseEntity<FinanceStatus> adminWorkUpdate(AdminWork adminWork) {
 		return dailyService.adminWorkUpdate(adminWork);
+	}
+
+	@Override
+	public void updateEMIandDate(DailyWork dailyWork) {
+	//	return dailyService.updateEMIandDate(dailyWork);
 	}
 
 }

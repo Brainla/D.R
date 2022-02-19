@@ -24,9 +24,9 @@ public interface DailyWorkDao {
 	
 	public ResponseEntity<FinanceStatus> updateDailyWork(DailyWork dailyWork);
 	
-	public ResponseEntity<FinanceStatus> updateMonthlyReportData(MonthlyReport reportData);
-	
 	public ResponseEntity<FinanceStatus> adminWorkUpdate(AdminWork adminWork);
 	
 	public ResponseEntity<FinanceStatus> updateNewCustomers(String date,int agent_id);
+	
+	public void updateEMIandDate(DailyWork dailyWork);
 }

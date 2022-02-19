@@ -18,4 +18,6 @@ public interface MonthlyReportDao {
 	public List<MonthlyReport> customerDetailsDownload();
 	
 	public ResponseEntity<FinanceStatus> insertReportData(MonthlyReport MonthlyReport);
+	
+	public ResponseEntity<FinanceStatus> updateMonthlyReportData(MonthlyReport reportData);
 }

@@ -32,10 +32,11 @@ public class CustomerDaoImpl implements CustomerDao{
 	@Override
 	@Transactional
 	public ResponseEntity<FinanceStatus> insertCustomerDetails(Customer customer) {
+		int id = customerDataRepository.findMaxId();
 		entityManager.createNativeQuery("insert into customer(CUSTOMER_ID,CUSTOMER_NAME,PH_NO_PRIMARY,RELATION_PRIMARY,PH_NO_SECONDARY,RELATION_SECONDARY,PH_NO_TERTIARY,RELATION_TERTIARY,HOUSE_ADDRESS,"
 				+ "WORK_ADDRESS,AADHAR_NO,PAN_NO,GROSS_PAY,NET_PAY,MONTHLY_INCOME,"
 				+ "OTHER_INCOME,CUSTOMER_HISTORY,LOAN_AMOUNT,RATE_OF_INTEREST,EMI_OR_MONTHLY,AMOUNT,COLLECTION_DATE,PROPERTY,AGENT_ID,AGENT_NAME)"
-				+ " values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)").setParameter(1, customer.getCustomer_id()).setParameter(2, customer.getCustomer_name()).setParameter(3, customer.getPh_no_primary()).
+				+ " values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)").setParameter(1, (id+1)).setParameter(2, customer.getCustomer_name()).setParameter(3, customer.getPh_no_primary()).
 		setParameter(4, customer.getRelation_primary()).setParameter(5, customer.getPh_no_secondary()).setParameter(6, customer.getRelation_secondary()).setParameter(7, customer.getPh_no_tertiary()).setParameter(8, customer.getRelation_tertiary()).
 		setParameter(9, customer.getHouse_address()).setParameter(10, customer.getWork_address()).setParameter(11, customer.getAadhar_no()).setParameter(12, customer.getPan_no()).setParameter(13, customer.getGross_pay()).
 		setParameter(14, customer.getNet_pay()).setParameter(15, customer.getMonthly_income()).setParameter(16, customer.getOther_income()).setParameter(17, customer.getCustomer_history()).setParameter(18, customer.getLoan_amount()).
@@ -44,23 +45,6 @@ public class CustomerDaoImpl implements CustomerDao{
 		return new ResponseEntity<FinanceStatus>(HttpStatus.OK);
 	}
 
-	/*@Override
-	public ResponseEntity<FinanceStatus> insertCustomerDetails(Customer customer) {
-		EntityManagerFactory emf=Persistence.createEntityManagerFactory("admin_approval");
-		EntityManager em=emf.createEntityManager();  
-		try {
-			em.getTransaction().begin();
-			em.persist(customer);
-			em.getTransaction().commit();	
-		}finally {
-			emf.close();  
-			em.close();  			
-		}
-		return new ResponseEntity<FinanceStatus>(HttpStatus.OK);
-	}*/
-	
-	
-	
 	
 	@Override
 	public ResponseEntity<FinanceStatus> updateCustomerDetails(Customer customer) {

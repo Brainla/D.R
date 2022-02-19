@@ -33,6 +33,8 @@ public class AdminWork {
 	private String given_date;
 	@Column(name="AGENT_ID")
 	private int agent_id;
+	@Column(name="AGENT_NAME")
+	private String agent_name;
 
 	public int getCustomer_id() {
 		return customer_id;
@@ -100,4 +102,11 @@ public class AdminWork {
 	public void setAgent_id(int agent_id) {
 		this.agent_id = agent_id;
 	}
+	public String getAgent_name() {
+		return agent_name;
+	}
+	public void setAgent_name(String agent_name) {
+		this.agent_name = agent_name;
+	}
+
 }

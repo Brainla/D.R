@@ -13,5 +13,7 @@ public interface AdminApprovalDao {
 	
 	public ResponseEntity<FinanceStatus> adminApprove(int cust_id);
 	
+	public void updateEMIDate();
+	
 	public ResponseEntity<FinanceStatus> insertApprovalData(AdminApproval aminApproval);
 }

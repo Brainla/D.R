@@ -33,4 +33,8 @@ public interface MonthlyReportController {
 	@PostMapping
 	@RequestMapping("/insert")
 	public ResponseEntity<FinanceStatus> insertReportData(@RequestBody MonthlyReport MonthlyReport);
+	
+	@PostMapping
+	@RequestMapping(value = "/report-update")
+	public ResponseEntity<FinanceStatus> updateMonthlyReportData(@RequestBody MonthlyReport reportData);
 }

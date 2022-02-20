@@ -58,11 +58,6 @@ public class DailyWorkServiceImpl implements DailyWorkService{
 	}
 
 	@Override
-	public ResponseEntity<FinanceStatus> updateMonthlyReportData(MonthlyReport reportData) {
-		return dailyWorkDao.updateMonthlyReportData(reportData);
-	}
-
-	@Override
 	public ByteArrayInputStream  customerDataDownload(int agent_id) {
 		 List<DailyWork> dailyWorkList = dailyWorkDao.customerDataDownload(agent_id);
 		 return excelHelper.tutorialsToExcel(dailyWorkList);
@@ -71,6 +66,11 @@ public class DailyWorkServiceImpl implements DailyWorkService{
 	@Override
 	public ResponseEntity<FinanceStatus> adminWorkUpdate(AdminWork adminWork) {
 		return dailyWorkDao.adminWorkUpdate(adminWork);
+	}
+
+	@Override
+	public void updateEMIandDate(DailyWork dailyWork) {
+		//return dailyWorkDao.updateEMIandDate(dailyWork);
 	}
 
 }

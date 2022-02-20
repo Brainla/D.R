@@ -23,8 +23,8 @@ public interface DailyWorkService {
 	
 	public ResponseEntity<FinanceStatus> updateDailyWork(DailyWork dailyWork);
 	
-	public ResponseEntity<FinanceStatus> updateMonthlyReportData(MonthlyReport reportData);
-	
 	public ResponseEntity<FinanceStatus> adminWorkUpdate(AdminWork adminWork);
+	
+	public void updateEMIandDate(DailyWork dailyWork);
 
 }

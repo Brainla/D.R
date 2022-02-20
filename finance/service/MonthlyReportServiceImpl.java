@@ -42,5 +42,10 @@ public class MonthlyReportServiceImpl implements MonthlyReportService{
 	public MonthlyReport getSingleCustomerData(int agent_id, int cust_id) {
 		return MonthlyReportDao.getSingleCustomerData(agent_id,cust_id);
 	}
+	
+	@Override
+	public ResponseEntity<FinanceStatus> updateMonthlyReportData(MonthlyReport reportData) {
+		return MonthlyReportDao.updateMonthlyReportData(reportData);
+	}
 
 }

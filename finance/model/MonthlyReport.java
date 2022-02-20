@@ -340,5 +340,8 @@ public class MonthlyReport {
 	public void setDate_31(String date_31) {
 		this.date_31 = date_31;
 	}
+	public String getDate(String date) {
+		return "date_"+date;
+	}
 
 }

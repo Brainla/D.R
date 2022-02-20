@@ -26,7 +26,7 @@ public interface AdminWorkController {
 	
 	@PostMapping
 	@RequestMapping("/delete")
-	public ResponseEntity<FinanceStatus> deleteCustomerData(@RequestParam(name="cust_id") int cust_id);
+	public ResponseEntity<FinanceStatus> deleteCustomerData(@RequestParam(name="customer_id") int cust_id);
 	
 	@PostMapping
 	@RequestMapping("/insert")

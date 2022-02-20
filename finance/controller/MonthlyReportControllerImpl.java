@@ -47,5 +47,10 @@ public class MonthlyReportControllerImpl implements MonthlyReportController{
 	public MonthlyReport getSingleCustomerData(int agent_id, int customer_id) {
 		return MonthlyReportService.getSingleCustomerData(agent_id,customer_id);
 	}
+	
+	@Override
+	public ResponseEntity<FinanceStatus> updateMonthlyReportData(MonthlyReport reportData) {
+		return MonthlyReportService.updateMonthlyReportData(reportData);
+	}
 
 }

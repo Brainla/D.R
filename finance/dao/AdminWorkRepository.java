@@ -21,5 +21,8 @@ public interface AdminWorkRepository extends JpaRepository<AdminWork, Integer>{
 	
 	@Query(value = "delete from admin_work customer_id= :cust_id",nativeQuery = true)
 	public int deleteCustomerData(@Param("cust_id") int cust_id);
+	
+	@Query(value = "select agent_name from agent_details where agent_id = :agent_id" ,nativeQuery = true)
+	public String getAgentName(@Param("agent_id") int agent_id);
 
 }

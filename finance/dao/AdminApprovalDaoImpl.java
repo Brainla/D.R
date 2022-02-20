@@ -43,7 +43,12 @@ public class AdminApprovalDaoImpl implements AdminApprovalDao{
 	@Override
 	public ResponseEntity<FinanceStatus> adminApprove(int cust_id) {
 		adminDataRepository.deleteById(cust_id);
+		updateEMIDate();
 		return new ResponseEntity<FinanceStatus>(HttpStatus.OK);
+	}
+	
+	public void updateEMIDate() {
+		
 	}
 
 	@Override

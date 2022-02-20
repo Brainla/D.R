@@ -3,10 +3,7 @@ package com.dtfinance.ltd.finance.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
@@ -14,9 +11,6 @@ import javax.persistence.Table;
 public class Customer {
 	@Id
 	@Column(name="CUSTOMER_ID")
-	//@SequenceGenerator(name="SEQ_GEN",sequenceName="SEQ_TEST",allocationSize=1)
-	//@GeneratedValue(strategy=GenerationType.SEQUENCE,generator="SEQ_GEN")
-	//@GeneratedValue(strategy=GenerationType.AUTO)
 	int customer_id;
 	@Column(name="CUSTOMER_NAME")
 	String customer_name;

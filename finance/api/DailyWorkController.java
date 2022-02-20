@@ -40,11 +40,11 @@ public interface DailyWorkController {
 	public ResponseEntity<FinanceStatus> updateDailyWork(@RequestBody DailyWork dailyWork);
 	
 	@PostMapping
-	@RequestMapping(value = "/report-update")
-	public ResponseEntity<FinanceStatus> updateMonthlyReportData(@RequestBody MonthlyReport reportData);
-	
-	@PostMapping
 	@RequestMapping(value = "/admin-work")
 	public ResponseEntity<FinanceStatus> adminWorkUpdate(@RequestBody AdminWork adminWork);
 
+	@PostMapping
+	@RequestMapping(value = "/update-emi-date")
+	public void updateEMIandDate(@RequestBody DailyWork dailyWork);
+		
 }

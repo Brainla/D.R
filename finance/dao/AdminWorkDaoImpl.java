@@ -62,12 +62,13 @@ public class AdminWorkDaoImpl implements AdminWorkDao{
 	@Override
 	@Transactional
 	public ResponseEntity<FinanceStatus> insertAdminWorkData(AdminWork adminWork) {
+		String agentName = adminWorkRepository.getAgentName(adminWork.getAgent_id());
 		entityManager.createNativeQuery("insert into admin_work(customer_id,customer_name,emi,collection_date,previous_balance,current_balance,received_amount,"
-				+ "balance,status,given_date,agent_id)values(?,?,?,to_date(?,'yyyy/mm/dd'),?,?,?,?,?,to_date(?,'yyyy/mm/dd'),?)").
+				+ "balance,status,given_date,agent_id,agent_name)values(?,?,?,to_date(?,'yyyy/mm/dd'),?,?,?,?,?,to_date(?,'yyyy/mm/dd'),?,?)").
 		setParameter(1, adminWork.getCustomer_id()).setParameter(2, adminWork.getCustomer_name()).setParameter(3, adminWork.getEmi())
 		.setParameter(4, adminWork.getCollection_date()).setParameter(5, adminWork.getPrevious_balance()).setParameter(6, adminWork.getCurrent_balance()).
 		setParameter(7, adminWork.getReceived_amount()).setParameter(8, adminWork.getBalance()).setParameter(9,adminWork.getStatus())
-		.setParameter(10, adminWork.getGiven_date()).setParameter(11, adminWork.getAgent_id()).executeUpdate();
+		.setParameter(10, adminWork.getGiven_date()).setParameter(11, adminWork.getAgent_id()).setParameter(12, agentName).executeUpdate();
 		return new ResponseEntity<FinanceStatus>(HttpStatus.OK);
 	}
 

@@ -1898,7 +1898,11 @@ function renderFinanceDetailTable(page_no){
 
 		if(total_count > 0){
 			$.each(data['dailyWorksList'], function(index,val){
-				var append_table = '<tr><td>'+(index+1)+'</td><td>'+val[finance_details['month_and_year']]+'</td><td>'+(val[finance_details['liq_cash']] + val[finance_details['investor']] + val[finance_details['dr_amt']]) +'</td><td>'+val[finance_details['liq_cash']]+'</td><td>'+val[finance_details['investor']]+'</td><td>'+val[finance_details['dr_amt']]+'</td>'+'<td><button data-toggle="modal" data-target="#editFinance"  data-investor-id='+ val[finance_details['data-accessors']['id']] +'>Update</button></td>'+
+				var total_amount = val[finance_details['liq_cash']] + val[finance_details['investor']] + val[finance_details['dr_amt']];
+				var liq_cash_percentage = val[finance_details['liq_cash']] / total_amount * 100
+				var investor_percentage = val[finance_details['investor']] / total_amount * 100
+				var dr_amt_percentage = val[finance_details['dr_amt']] / total_amount * 100
+				var append_table = '<tr><td>'+(index+1)+'</td><td>'+val[finance_details['month_and_year']]+'</td><td>'+ total_amount +'</td><td>'+val[finance_details['liq_cash']]+'</td><td>'+val[finance_details['investor']]+'</td>'+ '<td> '+ liq_cash_percentage + '%'+ investor_percentage + '%' +dr_amt_percentage + '% </td>' +'<td>'+val[finance_details['dr_amt']]+'</td>'+'<td><button data-toggle="modal" data-target="#editFinance"  data-investor-id='+ val[finance_details['data-accessors']['id']] +'>Update</button></td>'+
 				'<td><button class="btn btn-danger" id='+  val[finance_details['data-accessors']['id']] +'onclick= '+deleteFinance(this.id) +'>Delete</button></td>'+
 				'</tr>';
 	

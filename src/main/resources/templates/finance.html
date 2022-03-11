@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+      <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	    <script src="../static/js/combined_scripts.js"></script>
+        <script type="text/javascript" src="../static/js/pagination.min.js"></script>
+		<link rel="stylesheet" href="../static/css/style.css" />
+
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+      <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+   </head>
+   <body>
+      <div class="main_heading">
+         <h1>Finance Page</h1>
+      </div>
+      <div class="form-style">
+         <div id="editModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">     
+               <div class="modal-content">
+                  <div class="modal-header">
+                     <h5 class="modal-title" id="exampleModalLongTitle">Update Work details</h5>
+                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                     <span aria-hidden="true">&times;</span>
+                     </button>
+                  </div>
+					
+                  <div class="modal-body" style="background-color: #D3D3D3;">
+                     <form class="form-style" id="edit">
+                        <label for="newType">Status</label>
+                        <select class="form-control" id="newType" required>
+                           <option value="Choose type" disabled>Selete Status</option>
+                           <option value="Recieved">Recieved</option>
+                           <option value="No Response">No Response</option>
+                           <option value="Given Date">Date Given</option>
+                           <option value="Switch Off">Switch Off</option>
+                        </select>
+                        <br>
+                        <div class="col-6">
+                           <label for="editstartDate">Given date</label>
+                           <input type="date" id="editstartDate" class="form-control" value="new Date()" >
+                        </div>
+                        <div class="col-6">
+                           <label for="editstartDate">Received Amount</label>
+                           <input type="number" id="receamt" class="form-control" value="" >
+                        </div>
+                        <br>
+                        <div class="modal-footer">
+                           <button class="btn btn-primary" type="submit" name="submit">Update Details</button>
+                        </div>
+                     </form>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      </div>
+      </div> 
+      <div>
+         <div class="search_bar">
+            <form style="margin: auto; max-width: 300px;">
+                <input type="text" placeholder="Search.." name="search" />
+                <button type="submit"><i class="fa fa-search"></i></button>
+            </form>
+        </div>
+      <div class="table_cont">
+         <input type="hidden" id="page_type" value="finance-work" />
+
+         <table id="electric_table">
+      
+	  <thead>
+		<tr>
+			<th  scope="col">S.No</th>
+			 <th scope="col" >Month & Year</th>
+			 <th scope="col">Total Capital</th>
+			 <th scope="col">Liq cash</th>
+			 <th scope="col">Investor</th>
+			 <th scope="col">DR amount</th>
+          <th scope="col">Percentage</th>
+          <th scope="col">Update</th>
+          <th scope="col">Remove</th>
+		</tr>
+		</thead>
+		<tbody>
+		<tbody>
+      </table>
+	  <td colspan="10" class="loader">
+			<div class="loading"></div>
+		</td>
+      <!--create form-->
+      <div class="row text-center">
+         <button class="button2" data-toggle="modal" data-target="#createFinance" target="_blank">Create</button>
+         <br> 
+      </div>
+      <div class="form-style">
+         <div class="modal fade" id="createFinance" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+               <div class="modal-content">
+                  <div class="modal-header">
+                     <h3 class="modal-title" id="exampleModalLongTitle" style="text-align: center;">Enter Agent details</h3>
+                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+                  </div>
+                  <div class="modal-body" style="background-color: #D3D3D3;">
+                     <form class="form-style" action="/" method="POST" id="newuser">
+                        <label for="Month & Year">Month & Year</label>
+                        <input type="text" id="fa_month_and_year" name="panno" class="form-control" placeholder="Month & Year" required> 
+                        <br>
+                        <label for="Liq cash">Liq cash</label>
+                        <input type="number" id="fa_liq_cash" name="newMobile" class="form-control" placeholder="Liq cash" required>
+                        <br>
+                        <label for="Investor">Investor</label>
+                        <input type="text" id="fa_investor" name="address" class="form-control" placeholder="Investor" required>
+                        <br>
+                        <label for="DR amount">DR amount</label>
+                        <input type="number" id="fa_dr_amt" name="aadharno" class="form-control" placeholder="DR amount" required>
+                        <br>
+                        <div class="modal-footer">
+                           <button class="btn btn-primary add-finance" id="create" type="submit" name="submit">Add</button>
+                        </div>
+                     </form>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="form-style">
+         <div class="modal fade" id="editFinance" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+               <div class="modal-content">
+                  <div class="modal-header">
+                     <h3 class="modal-title" id="exampleModalLongTitle" style="text-align: center;">Enter Agent details</h3>
+                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button>
+                  </div>
+                  <div class="modal-body" style="background-color: #D3D3D3;">
+                     <form class="form-style" action="/" method="POST" id="newuser">
+                        <label for="Month & Year">Month & Year</label>
+                        <input type="text" id="fe_month_and_year" name="panno" class="form-control" placeholder="Month & Year" required> 
+                        <br>
+                        <label for="Liq cash">Liq cash</label>
+                        <input type="number" id="fe_liq_cash" name="newMobile" class="form-control" placeholder="Liq cash" required>
+                        <br>
+                        <label for="Investor">Investor</label>
+                        <input type="text" id="fe_investor" name="address" class="form-control" placeholder="Investor" required>
+                        <br>
+                        <label for="DR amount">DR amount</label>
+                        <input type="number" id="fe_dr_amt" name="aadharno" class="form-control" placeholder="DR amount" required>
+                        <br>
+                        <div class="modal-footer">
+                           <button class="btn btn-primary edit-finance" id="create" type="submit" name="submit">Save</button>
+                        </div>
+                     </form>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!--create form end-->
+	  <div class="box">
+	    <ul id="page" class="pagination"></ul>
+	    <div class="show"></div>
+	</div>
+      <i class="thumbtack icon"></i>
+   </body>
+</html>

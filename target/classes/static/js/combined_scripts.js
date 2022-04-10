@@ -92,9 +92,9 @@ const customer_repayment_page = {
 
 const investor_details = {
 	'page-value':'investor-details',
-	'data-endpoint':"data-retrieve",
+	'data-endpoint':"investor/all",
 	'search-endpoint':"data-search",
-	'store-endpoint':"data-store",
+	'store-endpoint':"investor/add",
 	'export-endpoint':"customer-export",
 	'delete-investor': "data-store",
 	'update-investor': "data-store",
@@ -117,7 +117,7 @@ const finance_details = {
 	'page-value':'finance-work',
 	'data-endpoint':"data-retrieve",
 	'search-endpoint':"data-search",
-	'store-endpoint':"data-store",
+	'store-endpoint':"finance/add",
 	'export-endpoint':"customer-export",
 	'delete-finance': "data-store",
 	'update-finance': "data-store",
@@ -750,25 +750,25 @@ $(document).ready(function(){
 			alert(data_updated_message);
 		});
 	});
-	$(document).on('click','#newuser',function(e){
-		var post_endpoint = create_agent_details['store-endpoint'];
-		var request_json = {
-			agent_id: $('#Userid').val() ? $('#Userid').val() : 0,
-			agent_name: $('#newUsername').val() ? $('#newUsername').val() : 0,
-			ph_no: $('#newMobile').val() ? $('#newMobile').val() : 0
-		}
-		$.ajax({
-			headers: { 
-				'Accept': 'application/json',
-				'Content-Type': 'application/json' 
-				},		
-			method: "POST",
-			data:JSON.stringify(request_json),
-			url: base_url+post_endpoint
-			}).done(function( data) {
-				alert(data_updated_message);
-			});
-	});
+	// $(document).on('click','#newuser',function(e){
+	// 	var post_endpoint = create_agent_details['store-endpoint'];
+	// 	var request_json = {
+	// 		agent_id: $('#Userid').val() ? $('#Userid').val() : 0,
+	// 		agent_name: $('#newUsername').val() ? $('#newUsername').val() : 0,
+	// 		ph_no: $('#newMobile').val() ? $('#newMobile').val() : 0
+	// 	}
+	// 	$.ajax({
+	// 		headers: { 
+	// 			'Accept': 'application/json',
+	// 			'Content-Type': 'application/json' 
+	// 			},		
+	// 		method: "POST",
+	// 		data:JSON.stringify(request_json),
+	// 		url: base_url+post_endpoint
+	// 		}).done(function( data) {
+	// 			alert(data_updated_message);
+	// 		});
+	// });
 	$(document).on('click','.close',function(){
 	    if($("#page_type").val() == create_agent_details['page-value']){
 	        location.reload();
@@ -892,13 +892,14 @@ $(document).ready(function(){
 		console.log('new investor')
 		var post_endpoint = investor_details['store-endpoint'];
 		var request_json = {
-			investor_investor_name: $('#investor_investor_name').val() ? $('#investor_investor_name').val() : 0,
-			investor_mobile: $('#investor_mobile').val() ? $('#investor_mobile').val() : 0,
-			investor_loan_amt: $('#investor_loan_amt').val() ? $('#investor_loan_amt').val() : 0,
-			investor_roi: $('#investor_roi').val() ? $('#investor_roi').val() : 0,
-			investor_received_date: $('#investor_received_date').val() ? $('#investor_received_date').val() : 0,
-			investor_repay_details: $('#investor_repay_details').val() ? $('#investor_repay_details').val() : 0
+			name: $('#investor_investor_name').val() ? $('#investor_investor_name').val() : 0,
+			phoneNumber: $('#investor_mobile').val() ? $('#investor_mobile').val() : 0,
+			loanAmount: parseFloat($('#investor_loan_amt').val() ? $('#investor_loan_amt').val() : 0),
+			rateOfInterest: parseFloat($('#investor_roi').val() ? $('#investor_roi').val() : 0),
+			recievedDate: $('#investor_received_date').val() ? $('#investor_received_date').val() : 0,
+			repayDetails: $('#investor_repay_details').val() ? $('#investor_repay_details').val() : 0
 		}
+		console.log(base_url+post_endpoint, request_json);
 		$.ajax({
 			headers: { 
 				'Accept': 'application/json',
@@ -917,7 +918,7 @@ $(document).ready(function(){
 			console.log('enter req fields')
 			return false;
 		}
-		console.log('new investor')
+		console.log('update investor')
 		var post_endpoint = investor_details['update-investor'];
 		var request_json = {
 			investor_investor_name: $('#investor_investor_name').val() ? $('#investor_investor_name').val() : 0,
@@ -948,11 +949,12 @@ $(document).ready(function(){
 		console.log('new finance')
 		var post_endpoint = finance_details['store-endpoint'];
 		var request_json = {
-			fa_month_and_year: $('#fa_month_and_year').val() ? $('#fa_month_and_year').val() : 0,
-			fa_liq_cash: $('#fa_liq_cash').val() ? $('#fa_liq_cash').val() : 0,
-			fa_investor: $('#fa_investor').val() ? $('#fa_investor').val() : 0,
-			fa_dr_amt: $('#fa_dr_amt').val() ? $('#fa_dr_amt').val() : 0
+			monthAndYear: $('#fa_month_and_year').val() ? $('#fa_month_and_year').val() : 0,
+			liquidCash: parseFloat($('#fa_liq_cash').val() ? $('#fa_liq_cash').val() : 0),
+			investor: { name : $('#fa_investor').val() ? $('#fa_investor').val() : 0 },
+			drAmount: parseFloat($('#fa_dr_amt').val() ? $('#fa_dr_amt').val() : 0)
 		}
+		console.log(base_url+post_endpoint, request_json)
 		$.ajax({
 			headers: { 
 				'Accept': 'application/json',

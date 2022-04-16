@@ -98,7 +98,7 @@ const investor_details = {
 	'export-endpoint':"customer-export",
 	'delete-investor': "data-store",
 	'update-investor': "data-store",
-	'data-accessors':{'id':'investor_id','name':'investor_name','loan_amount':'loan_amount','roi':'roi','received_date':'received_date','balance':'balance'}	
+	'data-accessors':{'id':'investor_id','name':'investor_name','phoneNumber': 'phone_number','loan_amount':'loan_amount','roi':'roi','received_date':'received_date','balance':'balance'}	
 };
 
 const admin_work_details = {
@@ -1463,6 +1463,7 @@ function renderInvestorsTable(page_no){
 					var append_table = '<tr class="row_'+index+'"><td>'+(index+1)+'</td>'+
 						'<td class="investor_id">'+(val[investor_details['data-accessors']['id']]!=undefined ? val[investor_details['data-accessors']['id']] : "")+'</td>'+
 						'<td class="investor_name">'+(val[investor_details['data-accessors']['name']]!=undefined ? val[investor_details['data-accessors']['name']] : "")+'</td>'+
+						'<td class="phone_number">'+(val[investor_details['data-accessors']['phone_number']]!=undefined ? val[investor_details['data-accessors']['phone_number']] : "")+'</td>'+
 						'<td class="loan_amount">'+(val[investor_details['data-accessors']['loan_amount']]!=undefined ? val[investor_details['data-accessors']['loan_amount']] : "")+'</td>'+
 						'<td class="roi">'+(val[investor_details['data-accessors']['roi']]!=undefined ? val[investor_details['data-accessors']['roi']] : "")+'</td>'+
 						'<td class="date">'+(val[investor_details['data-accessors']['received_date']]!=undefined ? val[investor_details['data-accessors']['received_date']] : "")+'</td>'+
@@ -1476,7 +1477,8 @@ function renderInvestorsTable(page_no){
 				if(data[investor_details['data-accessors']['id']]){
 					var append_table = '<tr class="row_'+index+'"><td>'+(index+1)+'</td>'+
 						'<td class="investor_id">'+(data[investor_details['data-accessors']['id']]!=undefined ? data[investor_details['data-accessors']['id']] : "")+'</td>'+
-						'<td>'+(data[investor_details['data-accessors']['name']]!=undefined ? data[investor_details['data-accessors']['name']] : "")+'</td>'+
+						'<td>'+(data[investor_details['data-accessors']['name']]!=undefined ? data[investor_details['data-accessors']['name']] : "")+'</td>'+ 
+						'<td class="phone_number">'+(val[investor_details['data-accessors']['phone_number']]!=undefined ? val[investor_details['data-accessors']['phone_number']] : "")+'</td>'+
 						'<td class="peding_amt">'+(data[investor_details['data-accessors']['pending']]!=undefined ? data[investor_details['data-accessors']['pending']] : "")+'</td>'+
 						'<td class="loan_amount">'+(data[investor_details['data-accessors']['loan_amount']]!=undefined ? data[investor_details['data-accessors']['loan_amount']] : "")+'</td>'+
 						'<td class="roi">'+(data[investor_details['data-accessors']['roi']]!=undefined ? data[investor_details['data-accessors']['roi']] : "")+'</td>'+
